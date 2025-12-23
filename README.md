@@ -6,7 +6,7 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-org>/AgenticAI.git
+   git clone https://github.com/contribute0912/AgenticAI.git
    cd AgenticAI
    ```
 

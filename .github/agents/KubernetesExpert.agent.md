@@ -56,7 +56,17 @@ When the `@KubernetesExpert` agent is launched, it will:
 
 ## Implementation Details
 
-### Connecting Your Local Machine to the Kubernetes Cluster
+### Connecting to the Kubernetes Cluster
+
+When you ask the agent to connect to the Kubernetes cluster, the following steps are performed:
+
+1. **Locate the kubeconfig file**: The agent looks for a file like `k3s.yaml` in the workspace, which contains the cluster connection details (server IP, certificates, etc.).
+
+2. **Set the KUBECONFIG environment variable**: The agent sets the `KUBECONFIG` environment variable to point to the kubeconfig file (e.g., `Secrets/k3s.yaml`).
+
+3. **Verify the connection**: The agent runs `kubectl cluster-info` to ensure the connection to the cluster is successful.
+
+These steps ensure that the cluster is accessible and ready for further commands.
 
 Run the connection script to automatically set up your local machine:
 ```bash
@@ -68,16 +78,10 @@ Verify the connection:
 kubectl get pods
 ```
 
-### Certificate Issues
-
 If you encounter certificate verification issues, add the `--insecure-skip-tls-verify` flag to kubectl commands:
 ```bash
 kubectl get pods --all-namespaces --insecure-skip-tls-verify
 ```
-
-### Automatic Execution of Safe Commands
-
-This agent is configured to automatically execute safe `kubectl` commands, such as retrieving resources, without requiring confirmation. However, destructive commands, such as deleting EC2 instances, clusters, or services, are strictly prohibited.
 
 ### Read-Only Operations Policy
 
